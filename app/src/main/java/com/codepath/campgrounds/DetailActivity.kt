@@ -21,14 +21,13 @@ class DetailActivity : AppCompatActivity() {
 
         // TODO: Find the remaining Views for the screen
         campgroundNameTV = findViewById(R.id.campgroundName)
+        campgroundDescriptionTV = findViewById(R.id.campgroundDescription)
+        campgroundLatLongTV = findViewById(R.id.campgroundLocation)
+        campgroundImageIV = findViewById(R.id.campgroundImage)
 
 
         // TODO: Get the extra from the Intent
         val campground = intent.getSerializableExtra(CAMPGROUND_EXTRA) as Campground
-        campgroundNameTV = findViewById(R.id.campgroundName)
-        campgroundDescriptionTV = findViewById(R.id.campgroundDescription)
-        campgroundLatLongTV = findViewById(R.id.campgroundLocation)
-        campgroundImageIV = findViewById(R.id.campgroundImage)
 
 
         // TODO:  Set the name, location, and description information
