@@ -12,7 +12,6 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import kotlinx.serialization.json.Json
 import okhttp3.Headers
 import org.json.JSONException
-import CampgroundApplication
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
