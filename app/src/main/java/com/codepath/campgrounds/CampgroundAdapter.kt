@@ -41,7 +41,7 @@ class CampgroundAdapter(private val context: Context, private val campgrounds: L
             itemView.setOnClickListener(this)
         }
 
-        fun bind(campground: Campground) {
+        fun bind(Campground: Campground) {
             // TODO: Set item views based on views and data model
             fun bind(campground: Campground) {
                 nameTextView.text = campground.name

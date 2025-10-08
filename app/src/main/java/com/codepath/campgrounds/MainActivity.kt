@@ -12,6 +12,9 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
 import kotlinx.serialization.json.Json
 import okhttp3.Headers
 import org.json.JSONException
+import CampgroundApplication
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 fun createJson() = Json {
     isLenient = true
@@ -72,10 +75,15 @@ class MainActivity : AppCompatActivity() {
 
                     // COMPLETED: Save the campgrounds and reload the screen
                     parsedJson.data?.let { list ->
-                        campgrounds.addAll(list)
-
-                        // TODO: Notify the adapter that the dataset has changed
-                        campgroundAdapter.notifyDataSetChanged()
+                        (application as CampgroundApplication).db.campgroundDao().deleteAll()
+                        (application as CampgroundApplication).db.campgroundDao().insertAll(list.map {
+                            CampgroundEntity(
+                                name = it.name,
+                                description = it.description,
+                                latLong = it.latLong,
+                                imageUrl = it.imageUrl
+                            )
+                        })
                     }
                 } catch (e: JSONException) {
                     Log.e(TAG, "Exception: $e")
@@ -83,5 +91,21 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+        lifecycleScope.launch {
+            (application as CampgroundApplication).db.campgroundDao().getAll().collect { databaseList ->
+                databaseList.map { entity ->
+                    Campground(
+                        entity.name,
+                        entity.description,
+                        entity.latLong,
+                        listOf(CampgroundImage(entity.imageUrl, null))
+                    )
+                }.also { mappedList ->
+                    campgrounds.clear()
+                    campgrounds.addAll(mappedList)
+                    campgroundAdapter.notifyDataSetChanged()
+                }
+            }
+        }
     }
 }

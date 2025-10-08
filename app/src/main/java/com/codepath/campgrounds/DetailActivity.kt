@@ -27,6 +27,7 @@ class DetailActivity : AppCompatActivity() {
 
 
         // TODO: Get the extra from the Intent
+
         val campground = intent.getSerializableExtra(CAMPGROUND_EXTRA) as Campground
 
 
